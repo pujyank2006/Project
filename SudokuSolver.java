@@ -97,6 +97,7 @@ public class SudokuSolver extends JFrame implements ActionListener {
         }
     }
 
+    // This functions actually solves the given sudoku problem
     private boolean solveSudoku(int[][] board) {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
