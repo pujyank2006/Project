@@ -54,6 +54,8 @@ public class MainPage extends JFrame implements ActionListener {
                 TicTacToe ticTacToeGUI = new TicTacToe();
                 ticTacToeGUI.setTitle("Play Tic Tac Toe");
             });
+
+        
         } else if (command.equals("eightpuzzle")) {
             System.out.println("Launching 8 Puzzle...");
         }
