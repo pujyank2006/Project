@@ -48,6 +48,10 @@ public class MainPage extends JFrame implements ActionListener {
         String command = e.getActionCommand();
         if (command.equals("sudoku")) {
             System.out.println("Launching Sudoku...");
+            SwingUtilities.invokeLater(() -> {
+                SudokuSolver sudoku = new SudokuSolver();
+                sudoku.setTitle("Solve Sudoku");
+            });
         } else if (command.equals("tictactoe")) {
             System.out.println("Launching Tic Tac Toe...");
             SwingUtilities.invokeLater(() -> {
