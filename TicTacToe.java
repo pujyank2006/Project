@@ -15,14 +15,21 @@ public class TicTacToe extends JFrame implements ActionListener {
 
     // Mild color palette
     private Color backgroundColor = new Color(240, 248, 255); // Alice Blue
-    private Color buttonColor = new Color(224, 255, 255);     // Light Cyan
+    private Color buttonColor = new Color(224, 255, 255); // Light Cyan
     private Color buttonHoverColor = new Color(204, 255, 255); // Slightly darker Cyan
-    private Color textColor = new Color(70, 130, 180);         // Steel Blue
-    private Color winningColor = new Color(255, 160, 122);     // Light Salmon
+    private Color textColor = new Color(70, 130, 180); // Steel Blue
+    private Color winningColor = new Color(255, 160, 122); // Light Salmon
 
     public TicTacToe() {
         setTitle("Playful Tic-Tac-Toe");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                new MainPage(); // Show main page again
+            }
+        });
+
         setPreferredSize(new Dimension(400, 500)); // Increased height for status and play again
 
         JPanel mainPanel = new JPanel();
