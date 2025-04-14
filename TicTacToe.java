@@ -11,18 +11,19 @@ public class TicTacToe extends JFrame implements ActionListener {
     private char currentPlayer = 'X';
     private boolean gameActive = true;
     private JLabel statusLabel;
+    private JButton playAgainButton;
 
     // Mild color palette
     private Color backgroundColor = new Color(240, 248, 255); // Alice Blue
-    private Color buttonColor = new Color(224, 255, 255);   // Light Cyan
+    private Color buttonColor = new Color(224, 255, 255);     // Light Cyan
     private Color buttonHoverColor = new Color(204, 255, 255); // Slightly darker Cyan
-    private Color textColor = new Color(70, 130, 180);     // Steel Blue
-    private Color winningColor = new Color(255, 160, 122);  // Light Salmon
+    private Color textColor = new Color(70, 130, 180);         // Steel Blue
+    private Color winningColor = new Color(255, 160, 122);     // Light Salmon
 
     public TicTacToe() {
         setTitle("Playful Tic-Tac-Toe");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(400, 450)); // Increased height for status label
+        setPreferredSize(new Dimension(400, 500)); // Increased height for status and play again
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -39,11 +40,20 @@ public class TicTacToe extends JFrame implements ActionListener {
         statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
         statusLabel.setBorder(new EmptyBorder(0, 0, 10, 0)); // Padding below status
 
+        playAgainButton = new JButton("Play Again");
+        playAgainButton.setFont(new Font("SansSerif", Font.BOLD, 16));
+        playAgainButton.setBackground(new Color(176, 224, 230)); // LightSteelBlue
+        playAgainButton.setForeground(textColor);
+        playAgainButton.setFocusPainted(false);
+        playAgainButton.addActionListener(_ -> resetGame());
+        playAgainButton.setVisible(false); // Initially hide the button
+
         initializeBoard();
         addButtons(boardPanel);
 
         mainPanel.add(statusLabel, BorderLayout.NORTH);
         mainPanel.add(boardPanel, BorderLayout.CENTER);
+        mainPanel.add(playAgainButton, BorderLayout.SOUTH);
 
         add(mainPanel);
         pack(); // Adjusts window size to fit components
@@ -70,7 +80,7 @@ public class TicTacToe extends JFrame implements ActionListener {
                 buttons[i][j].setForeground(textColor);
                 buttons[i][j].setFocusPainted(false);
                 buttons[i][j].addActionListener(this);
-    
+
                 // Add hover effect
                 buttons[i][j].getModel().addChangeListener(e -> {
                     ButtonModel model = (ButtonModel) e.getSource();
@@ -113,9 +123,11 @@ public class TicTacToe extends JFrame implements ActionListener {
                 statusLabel.setText("Player " + currentPlayer + " wins!");
                 highlightWinningLine();
                 gameActive = false;
+                playAgainButton.setVisible(true);
             } else if (isBoardFull()) {
                 statusLabel.setText("The game is a tie!");
                 gameActive = false;
+                playAgainButton.setVisible(true);
             } else {
                 switchPlayer();
                 statusLabel.setText("Player " + currentPlayer + "'s turn");
@@ -153,12 +165,12 @@ public class TicTacToe extends JFrame implements ActionListener {
     private boolean isWinner() {
         for (int i = 0; i < 3; i++) {
             if ((board[i][0] == currentPlayer && board[i][1] == currentPlayer && board[i][2] == currentPlayer) ||
-                (board[0][i] == currentPlayer && board[1][i] == currentPlayer && board[2][i] == currentPlayer)) {
+                    (board[0][i] == currentPlayer && board[1][i] == currentPlayer && board[2][i] == currentPlayer)) {
                 return true;
             }
         }
         if ((board[0][0] == currentPlayer && board[1][1] == currentPlayer && board[2][2] == currentPlayer) ||
-            (board[0][2] == currentPlayer && board[1][1] == currentPlayer && board[2][0] == currentPlayer)) {
+                (board[0][2] == currentPlayer && board[1][1] == currentPlayer && board[2][0] == currentPlayer)) {
             return true;
         }
         return false;
@@ -177,6 +189,21 @@ public class TicTacToe extends JFrame implements ActionListener {
 
     private void switchPlayer() {
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+    }
+
+    private void resetGame() {
+        initializeBoard();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                buttons[i][j].setText("");
+                buttons[i][j].setEnabled(true);
+                buttons[i][j].setForeground(textColor); // Reset text color
+            }
+        }
+        currentPlayer = 'X';
+        gameActive = true;
+        statusLabel.setText("Player X's turn");
+        playAgainButton.setVisible(false);
     }
 
     public static void main(String[] args) {
