@@ -49,20 +49,24 @@ public class MainPage extends JFrame implements ActionListener {
         if (command.equals("sudoku")) {
             System.out.println("Launching Sudoku...");
             SwingUtilities.invokeLater(() -> {
-                SudokuSolver sudoku = new SudokuSolver();
+                dispose();
+                SudokuPage sudoku = new SudokuPage();
                 sudoku.setTitle("Solve Sudoku");
             });
         } else if (command.equals("tictactoe")) {
             System.out.println("Launching Tic Tac Toe...");
-            SwingUtilities.invokeLater(() -> {
                 SwingUtilities.invokeLater(() -> {
                     dispose(); // Close MainPage
                     TicTacToe ticTacToeGUI = new TicTacToe();
                     ticTacToeGUI.setTitle("Play Tic Tac Toe");
                 });                
-            });
         } else if (command.equals("eightpuzzle")) {
             System.out.println("Launching 8 Puzzle...");
+            SwingUtilities.invokeLater(() -> {
+                dispose(); // Close MainPage
+                EightPuzzle Eightp = new EightPuzzle();
+                Eightp.setTitle("Play * Puzzle");
+            });
         }
     }
 
